@@ -1,11 +1,11 @@
 /* eslint-disable prettier/prettier */
 import { User } from '@prisma/client';
 import { Controller, Get, Post, HttpCode, Body } from '@nestjs/common';
-import { AppService } from './app.service';
+import { UsersService } from './users/users.service';
 
 @Controller('api-test')
 export class AppController {
-  constructor(private app: AppService) {}
+  constructor(private app: UsersService) {}
 
   @Post('create-user')
   @HttpCode(200)
