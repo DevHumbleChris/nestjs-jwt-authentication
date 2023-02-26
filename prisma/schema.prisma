@@ -10,8 +10,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Friend {
-  id String @id @default(uuid())
-  name String
-  location String
+model User {
+  userID String @id @default(uuid())
+  username String
+  password String
 }
