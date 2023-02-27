@@ -2,11 +2,12 @@
 import { User } from '@prisma/client';
 import { Controller, Get, Post, HttpCode, Body, UseGuards, Request } from '@nestjs/common';
 import { UsersService } from './users/users.service';
-import { AuthGuard } from '@nestjs/passport';
+import { LocalAuthGuard } from './auth/local-auth.guard';
+import { AuthService } from './auth-service/auth-service.service';
 
 @Controller('api-test')
 export class AppController {
-  constructor(private app: UsersService) {}
+  constructor(private app: UsersService, private authService: AuthService) {}
 
   @Post('create-user')
   @HttpCode(200)
@@ -14,10 +15,10 @@ export class AppController {
     return this.app.createUser(data)
   }
 
-  @UseGuards(AuthGuard('local'))
+  @UseGuards(LocalAuthGuard)
   @Post('auth/login')
   async login(@Request() req) {
-    return req.user
+    return this.authService.login(req.user)
   }
 
   @Get('users')
